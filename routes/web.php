@@ -16,7 +16,7 @@ use App\Http\Controllers\LoginController;
 
 Route::middleware('auth')->group(function () {
     Route::controller(HomeController::class)->group(function () {
-        Route::get('/', 'home')->name('home');
+        Route::get('/', 'index')->name('home');
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/order', 'order')->name('order');
         Route::get('/report', 'report')->name('report');
