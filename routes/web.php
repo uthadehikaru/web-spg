@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ScanController;
 use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +19,12 @@ Route::middleware('auth')->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('home');
         Route::get('/dashboard', 'dashboard')->name('dashboard');
-        Route::get('/order', 'order')->name('order');
         Route::get('/report', 'report')->name('report');
         Route::get('/sync', 'sync')->name('sync');
     });
+    
+    Route::get('/order', [ScanController::class,'index'])->name('order');
+    Route::post('/order', [ScanController::class,'submit'])->name('order.submit');
 });
 Route::get('/login', [LoginController::class,'index'])->name('login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('login.authenticate');
