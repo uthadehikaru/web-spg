@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ScanController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SyncController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,11 +21,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('home');
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/report', 'report')->name('report');
-        Route::get('/sync', 'sync')->name('sync');
     });
     
     Route::get('/order', [ScanController::class,'index'])->name('order');
     Route::post('/order', [ScanController::class,'submit'])->name('order.submit');
+
+    Route::get('/sync', [SyncController::class,'index'])->name('sync');
+    Route::get('/sync/{order_no}', [SyncController::class,'sync'])->name('sync.process');
+    Route::get('/sync/{order_no}/delete', [SyncController::class,'delete'])->name('sync.delete');
 });
 Route::get('/login', [LoginController::class,'index'])->name('login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('login.authenticate');

@@ -16,8 +16,7 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Product</th>
-              <th scope="col">Quantity</th>
+              <th scope="col">Order No</th>
               <th scope="col">Created By</th>
               <th scope="col">Synced</th>
             </tr>
@@ -25,11 +24,10 @@
           <tbody>
             @foreach($orders as $order)
             <tr>
-              <td>{{ $order->created_at->format('d/m/y h:i') }}</td>
-              <td>{{ $order->product_code }}</td>
-              <td>{{ $order->quantity }}</td>
+              <td>{{ $order->date_ordered->format('d/m/y h:i') }}</td>
+              <td>{{ $order->order_no }}</td>
               <td>{{ $order->user->name }}</td>
-              <td>{{ $order->c_orderline_id }}</td>
+              <td>{{ $order->c_order_no }}</td>
             </tr>
             @endforeach
           </tbody>

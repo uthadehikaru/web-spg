@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateScansTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateScansTable extends Migration
      */
     public function up()
     {
-        Schema::create('scans', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('product_code');
-            $table->unsignedInteger('quantity')->default(0);
+            $table->string('order_no')->unique();
+            $table->date('date_ordered');
             $table->foreignId('user_id')->constrained();
-            $table->unsignedInteger('c_orderline_id')->nullable();
+            $table->string('c_order_id')->nullable();
+            $table->string('c_order_no')->nullable();
         });
     }
 
@@ -30,6 +31,6 @@ class CreateScansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scans');
+        Schema::dropIfExists('orders');
     }
 }

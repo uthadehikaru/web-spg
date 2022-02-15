@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Scan extends Model
+class OrderLine extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'product_code',
         'quantity',
-        'user_id',
-        'c_orderline_id',
+        'order_id',
     ];
 
-    public function user()
+    public function order()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Order::class);
     }
 }
