@@ -4,8 +4,7 @@
         <h1 class="h2">Reports</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> -->
           </div>
         </div>
       </div>
@@ -17,7 +16,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Order No</th>
-              <th scope="col">Created By</th>
+          <th scope="col">Products</th>
               <th scope="col">Synced</th>
             </tr>
           </thead>
@@ -26,11 +25,16 @@
             <tr>
               <td>{{ $order->date_ordered->format('d/m/y h:i') }}</td>
               <td>{{ $order->order_no }}</td>
-              <td>{{ $order->user->name }}</td>
+            <td>
+              @foreach($order->lines as $line)
+                {{ $line->product_code }}, Qty : {{ $line->quantity }}<br/>
+              @endforeach
+            </td>
               <td>{{ $order->c_order_no }}</td>
             </tr>
             @endforeach
           </tbody>
         </table>
+        {{ $orders->links() }}
       </div>
 @endsection

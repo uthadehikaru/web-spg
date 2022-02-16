@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ScanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SyncController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/sync', [SyncController::class,'index'])->name('sync');
     Route::get('/sync/{order_no}', [SyncController::class,'sync'])->name('sync.process');
     Route::get('/sync/{order_no}/delete', [SyncController::class,'delete'])->name('sync.delete');
+    
+    Route::get('/users', [UserController::class,'index'])->name('user');
+    Route::get('/users/sync', [UserController::class,'sync'])->name('user.sync');
+    
+    Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 });
 Route::get('/login', [LoginController::class,'index'])->name('login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('login.authenticate');

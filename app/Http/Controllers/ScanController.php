@@ -8,10 +8,14 @@ use App\Models\OrderLine;
 use Carbon\Carbon;
 use Auth;
 use Str;
+use Gate;
 
 class ScanController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        if (Auth::user()->cannot('create', Order::class)) {
+            return abort(403);
+        }
         return view('scan');
     }
 

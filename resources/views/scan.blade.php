@@ -3,8 +3,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">New Order</h1>
   <div class="btn-group me-2">
-    <button type="button" class="btn btn-sm btn-outline-primary">New</button>
-    <button type="submit" id="save" class="btn btn-sm btn-primary">Save</button>
+    <button type="submit" id="save" class="btn btn-primary">Save</button>
   </div>
 </div>
 

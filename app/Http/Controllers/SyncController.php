@@ -9,7 +9,7 @@ use App\Models\Order;
 class SyncController extends Controller
 {
     public function index(){
-        $data['orders'] = Order::latest()->get();
+        $data['orders'] = Order::latest()->paginate(10);
         return view('sync',$data);
     }
 

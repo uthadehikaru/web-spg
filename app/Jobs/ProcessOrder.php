@@ -8,16 +8,23 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 
 use App\Models\Order;
 use Carbon\Carbon;
 use Http;
+use Auth;
 
 class ProcessOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $order;
+
+    public function middleware()
+    {
+        return [(new WithoutOverlapping($this->order->id))->dontRelease()];
+    }
 
     /**
      * Create a new job instance.
@@ -95,7 +102,7 @@ class ProcessOrder implements ShouldQueue
                                     <_0:val>1000023</_0:val>
                                 </_0:field>
                                 <_0:field column="SalesRep_ID">
-                                    <_0:val>1000064</_0:val>
+                                    <_0:val>'.Auth::user()->ad_user_id.'</_0:val>
                                 </_0:field>
                             </_0:DataRow>
                             </_0:ModelCRUD>

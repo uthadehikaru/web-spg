@@ -16,7 +16,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Order</th>
-          <th scope="col">Products</th>
+              <th scope="col">Created By</th>
           <th scope="col">Action</th>
         </tr>
         </thead>
@@ -25,11 +25,7 @@
           <tr>
             <th scope="row">{{ $order->created_at->format('d/M/Y H:i') }}</th>
             <td>{{ $order->order_no }}</td>
-            <td>
-              @foreach($order->lines as $line)
-                {{ $line->product_code }}, Qty : {{ $line->quantity }}<br/>
-              @endforeach
-            </td>
+            <td>{{ $order->user->name }}</td>
             @if($order->c_order_id>0)
             <td>{{ $order->c_order_no }}</td>
             @else
@@ -42,4 +38,5 @@
           @endforeach
         </tbody>
       </table>
+      {{ $orders->links() }}
 @endsection

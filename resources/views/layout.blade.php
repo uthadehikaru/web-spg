@@ -7,7 +7,7 @@
     <meta name="author" content="Zuhri">
     <title>{{ config('app.name') }}</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/dashboard/">
+    <link rel="canonical" href="{{ url()->current() }}">
 
     
 
@@ -41,9 +41,9 @@
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="navbar-nav">
+  <div class="navbar-nav d-none d-md-block">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="index.html">Sign out</a>
+      <a class="nav-link px-3" href="{{ route('logout') }}">Sign out</a>
     </div>
   </div>
 </header>
@@ -59,22 +59,40 @@
               Dashboard
             </a>
           </li>
+          @can('create', \App\Models\Order::class)
           <li class="nav-item">
             <a class="nav-link" href="{{ route('order') }}">
               <span data-feather="file"></span>
               New Order
             </a>
           </li>
+          @endcan
           <li class="nav-item">
             <a class="nav-link" href="{{ route('report') }}">
               <span data-feather="bar-chart-2"></span>
               Reports
             </a>
           </li>
+          @can('sync', Auth::user())
           <li class="nav-item">
             <a class="nav-link" href="{{ route('sync') }}">
               <span data-feather="layers"></span>
               Integrations
+            </a>
+          </li>
+          @endcan
+          @can('list', Auth::user())
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('user') }}">
+              <span data-feather="users"></span>
+              Users
+            </a>
+          </li>
+          @endcan
+          <li class="nav-item d-block d-md-none">
+            <a class="nav-link" href="{{ route('logout') }}">
+              <span data-feather="lock"></span>
+              Logout
             </a>
           </li>
         </ul>
@@ -93,6 +111,7 @@
 
       <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+      <script src="{{ asset('assets/dashboard.js') }}"></script>
       @stack('scripts')
   </body>
 </html>
