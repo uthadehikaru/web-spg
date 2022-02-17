@@ -19,7 +19,7 @@ class SyncController extends Controller
         if($order==null)
             abort(404);
         
-        ProcessOrder::dispatch($order);
+        ProcessOrder::dispatchSync($order);
 
         return redirect()->route('sync');
     }
