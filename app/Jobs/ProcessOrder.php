@@ -102,7 +102,7 @@ class ProcessOrder implements ShouldQueue
                                     <_0:val>1000023</_0:val>
                                 </_0:field>
                                 <_0:field column="SalesRep_ID">
-                                    <_0:val>'.Auth::user()->ad_user_id.'</_0:val>
+                                    <_0:val>'.$this->order->user->ad_user_id.'</_0:val>
                                 </_0:field>
                             </_0:DataRow>
                             </_0:ModelCRUD>
