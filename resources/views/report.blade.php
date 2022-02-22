@@ -4,7 +4,7 @@
         <h1 class="h2">Reports</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
-            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> -->
+            <a href="{{ route('order') }}" class="btn btn-sm btn-primary">New Order</a>
           </div>
         </div>
       </div>
