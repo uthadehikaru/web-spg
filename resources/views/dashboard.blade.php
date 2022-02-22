@@ -4,7 +4,7 @@
   <h1 class="h2">Dashboard</h1>
 </div>
 <div class="row">
-    <div class="col-sm">
+    <div class="col-sm mt-2">
       <div class="card text-white bg-primary" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">All Orders</h5>
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm">
+    <div class="col-sm mt-2">
       <div class="card text-white bg-success" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">Synced Orders</h5>
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm">
+    <div class="col-sm mt-2">
       <div class="card text-white bg-danger" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">Unsynced Orders</h5>

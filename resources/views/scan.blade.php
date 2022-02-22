@@ -21,7 +21,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col" width="75%">Product Code</th>
+            <th scope="col" width="60%">Product Code</th>
             <th scope="col" >Quantity</th>
           </tr>
         </thead>
