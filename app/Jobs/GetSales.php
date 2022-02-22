@@ -57,51 +57,11 @@ class GetSales
         </soapenv:Body>
     </soapenv:Envelope>';
 
-        // $response = Http::withBody(
-        //     $xml, 'text/xml'
-        // )->post(config('idempiere.host').'/ADInterface/services/ModelADService');
+        $response = Http::withBody(
+            $xml, 'text/xml'
+        )->post(config('idempiere.host').'/ADInterface/services/ModelADService');
 
-        //$clean_xml = $response->body();
-        $clean_xml = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-        <soap:Body>
-            <ns1:queryDataResponse xmlns:ns1="http://idempiere.org/ADInterface/1_0">
-                <WindowTabData xmlns="http://idempiere.org/ADInterface/1_0" NumRows="2" TotalRows="2" StartRow="0">
-                    <DataSet>
-                        <DataRow>
-                            <field column="AD_User_ID">
-                                <val>1000064</val>
-                            </field>
-                            <field column="Name">
-                                <val>usersca</val>
-                            </field>
-                            <field column="Password">
-                                <val>123</val>
-                            </field>
-                            <field column="EMail">
-                                <val>usersca@sca.com</val>
-                            </field>
-                        </DataRow>
-                        <DataRow>
-                            <field column="AD_User_ID">
-                                <val>1000063</val>
-                            </field>
-                            <field column="Name">
-                                <val>adminsca</val>
-                            </field>
-                            <field column="Password">
-                                <val>12345</val>
-                            </field>
-                            <field column="EMail">
-                                <val>adminsca@gmail.com</val>
-                            </field>
-                        </DataRow>
-                    </DataSet>
-                    <RowCount>2</RowCount>
-                    <Success>true</Success>
-                </WindowTabData>
-            </ns1:queryDataResponse>
-        </soap:Body>
-    </soap:Envelope>';
+        $clean_xml = $response->body();
         $clean_xml = str_ireplace(['NS1:', 'SOAP:'], '', $clean_xml);
         $objXmlDocument = simplexml_load_string($clean_xml);
         $objJsonDocument = json_encode($objXmlDocument);
