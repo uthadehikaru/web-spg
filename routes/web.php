@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/sync', [UserController::class,'sync'])->name('user.sync');
     
     Route::get('/logout', [LoginController::class,'logout'])->name('logout');
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 });
 Route::get('/login', [LoginController::class,'index'])->name('login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('login.authenticate');

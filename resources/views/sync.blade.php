@@ -27,7 +27,7 @@
             <td>{{ $order->order_no }}</td>
             <td>{{ $order->user->name }}</td>
             @if($order->c_order_id>0)
-            <td>{{ $order->c_order_no }}</td>
+            <td><a href="http://112.78.32.216:82/webui/?Action=Zoom&TableName=C_Order&Record_ID={{ $order->c_order_id }}" target="_blank">{{ $order->c_order_no }}</a></td>
             @else
             <td>
               <a href="{{ route('sync.process', $order->order_no) }}" class="btn btn-primary btn-sm">Sync</a>

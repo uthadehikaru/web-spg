@@ -40,7 +40,7 @@ class GetSales
             <_0:queryData>
                 <_0:ModelCRUDRequest>
                     <_0:ModelCRUD>
-                        <_0:serviceType>get_salesrep</_0:serviceType>
+                        <_0:serviceType>get_spg_v</_0:serviceType>
                     </_0:ModelCRUD>
                     <_0:ADLoginRequest>
                         <_0:user>'.config('idempiere.user').'</_0:user>
@@ -70,21 +70,20 @@ class GetSales
             $rows = $arrOutput['Body']['queryDataResponse']['WindowTabData']['DataSet']['DataRow'];
             foreach($rows as $row){
                 $data = [];
-                foreach($row['field'] as $field){
+                foreach($row as $field){
                     $column = strtolower($field['@attributes']['column']);
-                    if($column=='password'){
-                        $data[$column] = \Hash::make($field['val']);
-                    }elseif($column=='email'){
-                        $val = "";
-                        if($field['val']!=null)
-                            $val = $field['val'];
-                        $data[$column] = $val;
+                    if($column=='user_password'){
+                        $data['password'] = \Hash::make($field['val']);
+                    }elseif($column=='user_email'){
+                        $data['email'] = $field['val'];
+                    }elseif($column=='user_name'){
+                        $data['name'] = $field['val'];
                     }else{
                         $data[$column] = $field['val'];
                     }
                 }
                 $data['is_admin'] = false;
-                $user = User::where('ad_user_id',$data['ad_user_id'])->first();
+                $user = User::where('user_id',$data['user_id'])->first();
                 if($user==null){
                     User::create($data);
                 }else

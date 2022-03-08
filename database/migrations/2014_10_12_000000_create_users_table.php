@@ -19,7 +19,17 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->uuid('ad_user_id')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('campaign_id')->nullable();
+            $table->string('campaign_name')->nullable();
+            $table->unsignedInteger('warehouse_id')->nullable();
+            $table->string('warehouse_name')->nullable();
+            $table->unsignedInteger('customer_id')->nullable();
+            $table->string('customer_name')->nullable();
+            $table->unsignedInteger('location_id')->nullable();
+            $table->string('location_name')->nullable();
+            $table->unsignedInteger('doctype_id')->nullable();
+            $table->string('doctype_name')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();

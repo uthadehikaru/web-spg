@@ -15,7 +15,7 @@ class SyncController extends Controller
 
     public function sync($order_no)
     {
-        $order = Order::where('order_no',$order_no)->first();
+        $order = Order::with('user')->where('order_no',$order_no)->first();
         if($order==null)
             abort(404);
         

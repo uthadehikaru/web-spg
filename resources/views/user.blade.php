@@ -25,7 +25,7 @@
               <td>{{ $user->created_at->format('d/m/y h:i') }}</td>
               <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
-              <td>{{ $user->is_admin?'Admin':$user->ad_user_id }}</td>
+              <td>{{ $user->is_admin?'Admin':$user->user_id }}</td>
             </tr>
             @endforeach
           </tbody>

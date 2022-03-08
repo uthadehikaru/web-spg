@@ -8,4 +8,5 @@ return [
     'organization'=> env('IDEMPIEREWS_ORG'),
     'warehouse'=> env('IDEMPIEREWS_WH'),
     'role'=> env('IDEMPIEREWS_ROLE'),
+    'pricelist'=> env('IDEMPIEREWS_PRICELIST'),
 ];

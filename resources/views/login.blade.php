@@ -39,7 +39,6 @@
 <main class="form-signin">
   <form method="post" action="{{ route('login') }}">
     @csrf
-    <img class="mb-4" src="assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
     @if ($errors->any())
@@ -66,7 +65,7 @@
       </label>
     </div>
     <button type="submit" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+    <p class="mt-5 mb-3 text-muted">Copyright &copy; {{ config('app.name') }} {{ date('Y') }}</p>
   </form>
 </main>
 

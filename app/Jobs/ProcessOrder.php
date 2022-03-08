@@ -19,7 +19,7 @@ class ProcessOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $order;
+    protected $order, $user;
 
     public function middleware()
     {
@@ -34,6 +34,7 @@ class ProcessOrder implements ShouldQueue
     public function __construct(Order $order)
     {
         $this->order = $order;
+        $this->user = $order->user;
     }
 
     /**
@@ -72,19 +73,19 @@ class ProcessOrder implements ShouldQueue
                                     <_0:val>@#AD_Org_ID</_0:val>
                                 </_0:field>
                                 <_0:field column="C_Campaign_ID">
-                                    <_0:val>1000033</_0:val>
+                                    <_0:val>'.$this->user->campaign_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="C_DocTypeTarget_ID">
-                                    <_0:val>1000437</_0:val>
+                                    <_0:val>'.$this->user->doctype_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="C_DocType_ID">
-                                    <_0:val>1000437</_0:val>
+                                    <_0:val>'.$this->user->doctype_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="C_BPartner_ID">
-                                    <_0:val>1000402</_0:val>
+                                    <_0:val>'.$this->user->customer_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="C_BPartner_Location_ID">
-                                    <_0:val>1000455</_0:val>
+                                    <_0:val>'.$this->user->location_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="POReference">
                                     <_0:val>'.$this->order->order_no.'</_0:val>
@@ -96,13 +97,13 @@ class ProcessOrder implements ShouldQueue
                                     <_0:val>'.$this->order->date_ordered.'</_0:val>
                                 </_0:field>
                                 <_0:field column="M_Warehouse_ID">
-                                    <_0:val>1000016</_0:val>
+                                    <_0:val>'.$this->user->warehouse_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="M_PriceList_ID">
-                                    <_0:val>1000023</_0:val>
+                                    <_0:val>'.config('idempiere.pricelist').'</_0:val>
                                 </_0:field>
                                 <_0:field column="SalesRep_ID">
-                                    <_0:val>'.$this->order->user->ad_user_id.'</_0:val>
+                                    <_0:val>'.$this->user->user_id.'</_0:val>
                                 </_0:field>
                             </_0:DataRow>
                             </_0:ModelCRUD>
@@ -145,7 +146,7 @@ class ProcessOrder implements ShouldQueue
         $response = Http::withBody(
             $xml, 'text/xml'
         )->post(config('idempiere.host').'/ADInterface/services/compositeInterface');
-
+        error_log($xml);
         $clean_xml = $response->body();
         $clean_xml = str_ireplace(['NS1:', 'SOAP:'], '', $clean_xml);
         $objXmlDocument = simplexml_load_string($clean_xml);
@@ -163,6 +164,5 @@ class ProcessOrder implements ShouldQueue
             $error = substr($clean_xml, strpos($clean_xml,'<Error>'), (strpos($clean_xml,'</Error>')-strpos($clean_xml,'<Error>')));
             throw new \Exception($error);
         }
-        return "";
     }
 }
