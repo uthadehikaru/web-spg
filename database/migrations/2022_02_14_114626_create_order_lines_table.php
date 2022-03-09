@@ -18,6 +18,8 @@ class CreateOrderLinesTable extends Migration
             $table->timestamps();
             $table->string('product_code');
             $table->unsignedInteger('quantity')->default(0);
+            $table->unsignedInteger('price')->default(0);
+            $table->unsignedInteger('total')->default(0);
             $table->foreignId('order_id')->constrained();
         });
     }

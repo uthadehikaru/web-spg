@@ -12,19 +12,14 @@ function docReady(fn) {
 }
 
 function process(decodedText){
-    var row = document.getElementById(decodedText);
-    if(row==null){
-        ++countResults;
-        var clone = template.cloneNode(true);
-        clone.id = decodedText;
-        clone.querySelector('.counter').textContent = countResults;
-        clone.querySelector('.value').textContent = decodedText;
-        clone.querySelector('.product_code').value = decodedText;
-        clone.classList.remove("d-none");
-        resultContainer.append(clone);
-    }else{
-        increaseQuantity(row);
-    }
+    ++countResults;
+    var clone = template.cloneNode(true);
+    clone.id = decodedText;
+    clone.querySelector('.counter').textContent = countResults;
+    clone.querySelector('.value').textContent = decodedText;
+    clone.querySelector('.product_code').value = decodedText;
+    clone.classList.remove("d-none");
+    resultContainer.append(clone);
 }
 
 function increaseQuantity(row)

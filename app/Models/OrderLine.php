@@ -13,6 +13,8 @@ class OrderLine extends Model
         'product_code',
         'quantity',
         'order_id',
+        'price',
+        'total',
     ];
 
     public function order()

@@ -16,7 +16,8 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Order No</th>
-          <th scope="col">Products</th>
+              <th scope="col">Products</th>
+              <th scope="col">Total</th>
               <th scope="col">Synced</th>
             </tr>
           </thead>
@@ -27,9 +28,10 @@
               <td>{{ $order->order_no }}</td>
             <td>
               @foreach($order->lines as $line)
-                {{ $line->product_code }}, Qty : {{ $line->quantity }}<br/>
+                {{ $line->product_code }}, Qty : {{ $line->quantity }},  TotalLine : {{ $line->total }}<br/>
               @endforeach
             </td>
+              <td>{{ $order->grandtotal }}</td>
               <td>{{ $order->c_order_no }}</td>
             </tr>
             @endforeach

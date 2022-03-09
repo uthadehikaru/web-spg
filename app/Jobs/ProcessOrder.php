@@ -44,7 +44,8 @@ class ProcessOrder implements ShouldQueue
      */
     public function handle()
     {
-        $xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_0="http://idempiere.org/ADInterface/1_0">
+        $xml = '
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_0="http://idempiere.org/ADInterface/1_0">
             <soapenv:Header/>
             <soapenv:Body>
             <_0:compositeOperation>
@@ -73,19 +74,19 @@ class ProcessOrder implements ShouldQueue
                                     <_0:val>@#AD_Org_ID</_0:val>
                                 </_0:field>
                                 <_0:field column="C_Campaign_ID">
-                                    <_0:val>'.$this->user->campaign_id.'</_0:val>
+                                    <_0:val>'.$this->order->campaign_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="C_DocTypeTarget_ID">
-                                    <_0:val>'.$this->user->doctype_id.'</_0:val>
+                                    <_0:val>'.$this->order->doctype_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="C_DocType_ID">
-                                    <_0:val>'.$this->user->doctype_id.'</_0:val>
+                                    <_0:val>'.$this->order->doctype_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="C_BPartner_ID">
-                                    <_0:val>'.$this->user->customer_id.'</_0:val>
+                                    <_0:val>'.$this->order->customer_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="C_BPartner_Location_ID">
-                                    <_0:val>'.$this->user->location_id.'</_0:val>
+                                    <_0:val>'.$this->order->location_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="POReference">
                                     <_0:val>'.$this->order->order_no.'</_0:val>
@@ -97,7 +98,7 @@ class ProcessOrder implements ShouldQueue
                                     <_0:val>'.$this->order->date_ordered.'</_0:val>
                                 </_0:field>
                                 <_0:field column="M_Warehouse_ID">
-                                    <_0:val>'.$this->user->warehouse_id.'</_0:val>
+                                    <_0:val>'.$this->order->warehouse_id.'</_0:val>
                                 </_0:field>
                                 <_0:field column="M_PriceList_ID">
                                     <_0:val>'.config('idempiere.pricelist').'</_0:val>
@@ -105,14 +106,21 @@ class ProcessOrder implements ShouldQueue
                                 <_0:field column="SalesRep_ID">
                                     <_0:val>'.$this->user->user_id.'</_0:val>
                                 </_0:field>
+                                <_0:field column="TotalLines">
+                                    <_0:val>'.$this->order->grandtotal.'</_0:val>
+                                </_0:field>
+                                <_0:field column="GrandTotal">
+                                    <_0:val>'.$this->order->grandtotal.'</_0:val>
+                                </_0:field>
                             </_0:DataRow>
                             </_0:ModelCRUD>
                         </_0:operation>';
 
                         foreach($this->order->lines as $line){
-                            $xml .= '<_0:operation preCommit="false" postCommit="false">
+                            $xml .= '
+                        <_0:operation preCommit="false" postCommit="false">
                             <_0:TargetPort>createData</_0:TargetPort>
-                                <_0:ModelCRUD>
+                            <_0:ModelCRUD>
                                 <_0:serviceType>create_orderline</_0:serviceType>
                                 <_0:DataRow>
                                     <_0:field column="C_Order_ID">
@@ -122,14 +130,27 @@ class ProcessOrder implements ShouldQueue
                                     <_0:field column="QtyEntered">
                                         <_0:val>'.$line->quantity.'</_0:val>
                                     </_0:field>
+                                    <_0:field column="QtyOrdered">
+                                        <_0:val>'.$line->quantity.'</_0:val>
+                                    </_0:field>
                                     <_0:field column="C_UOM_ID">
-                                        <_0:val>1000021</_0:val>
+                                        <_0:val>1000021</_0:val> <!-- PCS -->
+                                    </_0:field>
+                                    <_0:field column="PriceActual">
+                                        <_0:val>'.$line->price.'</_0:val>
+                                    </_0:field>
+                                    <_0:field column="PriceEntered">
+                                        <_0:val>'.$line->price.'</_0:val>
+                                    </_0:field>
+                                    <_0:field column="LineNetAmt">
+                                        <_0:val>'.$line->total.'</_0:val>
                                     </_0:field>
                                 </_0:DataRow>
-                                </_0:ModelCRUD>
-                            </_0:operation>';
+                            </_0:ModelCRUD>
+                        </_0:operation>';
                         }
-                        $xml .= '<_0:operation preCommit="false" postCommit="true">
+                        $xml .= '
+                        <_0:operation preCommit="false" postCommit="true">
                             <_0:TargetPort>setDocAction</_0:TargetPort>
                             <_0:ModelSetDocAction>
                                 <_0:serviceType>docaction_order</_0:serviceType>
@@ -142,11 +163,10 @@ class ProcessOrder implements ShouldQueue
             </_0:compositeOperation>
             </soapenv:Body>
         </soapenv:Envelope>';
-
+        
         $response = Http::withBody(
             $xml, 'text/xml'
         )->post(config('idempiere.host').'/ADInterface/services/compositeInterface');
-        error_log($xml);
         $clean_xml = $response->body();
         $clean_xml = str_ireplace(['NS1:', 'SOAP:'], '', $clean_xml);
         $objXmlDocument = simplexml_load_string($clean_xml);

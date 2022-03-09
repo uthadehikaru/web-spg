@@ -21,7 +21,8 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col" width="60%">Product Code</th>
+            <th scope="col" width="30%">Product Code</th>
+            <th scope="col" >Price</th>
             <th scope="col" >Quantity</th>
           </tr>
         </thead>
@@ -29,6 +30,7 @@
           <tr id="row-template" class="d-none">
             <td scope="row" class="counter">0</td>
             <td><input type="hidden" name="product_code[]" class="product_code" value=""><span class="value"></span></td>
+            <td><input type="number" name="price[]" class="form-control" value="0"></td>
             <td>
             <div class="input-group input-group-sm">
               <div class="input-group-prepend">
