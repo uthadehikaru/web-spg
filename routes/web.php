@@ -6,6 +6,8 @@ use App\Http\Controllers\ScanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SyncController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ApiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +28,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/order', [ScanController::class,'index'])->name('order');
     Route::post('/order', [ScanController::class,'submit'])->name('order.submit');
+    Route::get('/order/{order:order_no}', [ScanController::class,'edit'])->name('order.edit');
+    Route::post('/order/{order:order_no}', [ScanController::class,'update'])->name('order.update');
 
     Route::get('/sync', [SyncController::class,'index'])->name('sync');
     Route::get('/sync/{order_no}', [SyncController::class,'sync'])->name('sync.process');
@@ -33,6 +37,11 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/users', [UserController::class,'index'])->name('user');
     Route::get('/users/sync', [UserController::class,'sync'])->name('user.sync');
+
+    Route::get('/products', [ProductController::class,'index'])->name('product');
+    Route::get('/products/sync', [ProductController::class,'sync'])->name('product.sync');
+    
+    Route::get('/api/product/{product:value}', [ApiController::class,'product'])->name('api.product');
     
     Route::get('/logout', [LoginController::class,'logout'])->name('logout');
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

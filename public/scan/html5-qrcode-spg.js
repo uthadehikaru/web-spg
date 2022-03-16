@@ -11,15 +11,38 @@ function docReady(fn) {
     }
 }
 
-function process(decodedText){
+function check(decodedText){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:8000/api/product/"+decodedText, true);
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4) {
+            if(xhr.status == 200){
+                var product = JSON.parse(xhr.responseText);
+                process(product);
+            }else{
+                alert('Product not found');
+            }
+        }
+    }
+    xhr.send();
+}
+
+function process(product){
     ++countResults;
     var clone = template.cloneNode(true);
-    clone.id = decodedText;
-    clone.querySelector('.counter').textContent = countResults;
-    clone.querySelector('.value').textContent = decodedText;
-    clone.querySelector('.product_code').value = decodedText;
+    clone.id = product.value;
+    clone.querySelector('.value').textContent = countResults+ ". " + product.value+" - "+product.name;
+    clone.querySelector('.product_code').value = product.value;
+    clone.querySelector('.product_name').value = product.name;
+    clone.querySelector('.price').value = product.price;
+    clone.querySelector('.price').id = 'price-'+countResults;
     clone.classList.remove("d-none");
     resultContainer.append(clone);
+    new AutoNumeric('#price-'+countResults, { 
+        digitGroupSeparator : '.',
+        decimalCharacter : ',',
+        decimalPlaces : 0,
+      });
 }
 
 function increaseQuantity(row)
@@ -34,6 +57,18 @@ function decreaseQuantity(row)
     if(quantity>0)
         quantity = quantity-1;
     row.querySelector('.quantity').value = quantity;
+}
+
+function delete_line(e)
+{
+    parent = e.parentNode.parentNode.parentNode.parentNode;
+    parent.querySelector('.is_deleted').value = 1;
+    parent.classList.add('d-none');
+}
+
+function delete_row(e)
+{
+    e.parentNode.parentNode.parentNode.parentNode.remove();
 }
 
 document.addEventListener( 'click', function( e ) {
@@ -52,12 +87,18 @@ docReady(function() {
     
     document.getElementById('product_code').onchange = function() {
         var decodedText = this.value;
-        process(decodedText);
+        check(decodedText);
         this.value = "";
     };
 
+    AutoNumeric.multiple('.price', { 
+        digitGroupSeparator : '.',
+        decimalCharacter : ',',
+        decimalPlaces : 0,
+    });
     
     document.getElementById('save').onclick = function() {
+        document.getElementById("date-ordered").value = document.getElementById('date-input').value;
         document.getElementById("scan-form").submit();
     };
 
@@ -79,7 +120,7 @@ docReady(function() {
         });
     
     function onScanSuccess(decodedText, decodedResult) {
-        process(decodedText);
+        check(decodedText);
     }
     
     // Optional callback for error, can be ignored.

@@ -35,9 +35,9 @@ class HomeController extends Controller
 
     public function report(){
         if(Auth::user()->is_admin)
-            $data['orders'] = Order::latest()->paginate(10);
+            $data['orders'] = Order::latest('date_ordered')->paginate(10);
         else
-            $data['orders'] = Order::latest()->where('user_id',Auth::id())->paginate(10);
+            $data['orders'] = Order::latest('date_ordered')->where('user_id',Auth::id())->paginate(10);
             
         return view('report', $data);
     }

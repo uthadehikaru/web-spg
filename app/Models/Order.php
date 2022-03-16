@@ -44,4 +44,9 @@ class Order extends Model
     {
         return $this->hasMany(OrderLine::class);
     }
+
+    public function getTotalAttribute($value)
+    {
+        return 'Rp '.number_format($this->grandtotal, 0, ",", ".");
+    }
 }

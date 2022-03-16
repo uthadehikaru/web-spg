@@ -137,13 +137,16 @@ class ProcessOrder implements ShouldQueue
                                         <_0:val>1000021</_0:val> <!-- PCS -->
                                     </_0:field>
                                     <_0:field column="PriceActual">
-                                        <_0:val>'.$line->price.'</_0:val>
+                                        <_0:val>'.$line->getRawOriginal('price').'</_0:val>
                                     </_0:field>
                                     <_0:field column="PriceEntered">
-                                        <_0:val>'.$line->price.'</_0:val>
+                                        <_0:val>'.$line->getRawOriginal('price').'</_0:val>
+                                    </_0:field>
+                                    <_0:field column="PriceList">
+                                        <_0:val>'.$line->getRawOriginal('price').'</_0:val>
                                     </_0:field>
                                     <_0:field column="LineNetAmt">
-                                        <_0:val>'.$line->total.'</_0:val>
+                                        <_0:val>'.$line->getRawOriginal('total').'</_0:val>
                                     </_0:field>
                                 </_0:DataRow>
                             </_0:ModelCRUD>

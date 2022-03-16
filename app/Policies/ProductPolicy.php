@@ -3,10 +3,9 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Order;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class OrderPolicy
+class ProductPolicy
 {
     use HandlesAuthorization;
 
@@ -20,13 +19,18 @@ class OrderPolicy
         //
     }
 
-    public function create(User $user)
+    public function list(User $user)
     {
-        return $user->is_admin === false;
+        return $user->is_admin;
     }
 
-    public function edit(User $user, Order $order)
+    public function sync(User $user)
     {
-        return $order->c_order_id==null && ($user->is_admin || $user->id==$order->user_id);
+        return $user->is_admin;
+    }
+
+    public function api(User $user)
+    {
+        return $user;
     }
 }
