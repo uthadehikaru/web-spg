@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Zuhri">
+    <meta name="base_url" content="{{ url('') }}">
     <title>{{ config('app.name') }}</title>
 
     <link rel="canonical" href="{{ url()->current() }}">

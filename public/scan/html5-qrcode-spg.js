@@ -13,7 +13,8 @@ function docReady(fn) {
 
 function check(decodedText){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8000/api/product/"+decodedText, true);
+    var base_url = document.querySelector('meta[name="description"]').content;
+    xhr.open("GET", base_url+"/api/product/"+decodedText, true);
     xhr.onreadystatechange = function() {
         if(xhr.readyState == 4) {
             if(xhr.status == 200){
