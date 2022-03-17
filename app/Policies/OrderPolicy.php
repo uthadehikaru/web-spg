@@ -29,4 +29,9 @@ class OrderPolicy
     {
         return $order->c_order_id==null && ($user->is_admin || $user->id==$order->user_id);
     }
+
+    public function cancel(User $user, Order $order)
+    {
+        return $order->c_order_id>0 && !$order->is_canceled && ($user->is_admin || $user->id==$order->user_id);
+    }
 }

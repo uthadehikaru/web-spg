@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Jobs\ProcessOrder;
+use App\Jobs\CancelOrder;
 use App\Models\Order;
 use Auth;
+use DB;
+use Artisan;
 
 class SyncController extends Controller
 {
@@ -14,17 +17,38 @@ class SyncController extends Controller
             return abort(403);
         }
 
-        $data['orders'] = Order::latest()->paginate(10);
+        $data['jobs'] = DB::table('jobs')->count();
+        $data['failedJobs'] = DB::table('failed_jobs')->where('queue','order')->get();
         return view('sync',$data);
     }
 
-    public function sync($order_no)
+    public function sync()
+    {
+        if (Auth::user()->cannot('sync', Auth::user())) {
+            return abort(403);
+        }
+
+        $orders = Order::whereNull('c_order_id')->get();
+        $count = 0;
+        foreach($orders as $order){
+            if(!$order->job){
+                $job = new ProcessOrder($order);
+                $order->job_id = app(\Illuminate\Contracts\Bus\Dispatcher::class)->dispatch($job);
+                $order->save();
+                $count++;
+            }
+        }
+
+        return back()->with('message',$count.' Jobs Created');
+    }
+
+    public function cancel($order_no)
     {
         $order = Order::with('user')->where('order_no',$order_no)->first();
         if($order==null)
             abort(404);
         
-        ProcessOrder::dispatchSync($order);
+        CancelOrder::dispatchSync($order);
 
         return back();
     }

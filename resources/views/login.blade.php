@@ -39,7 +39,7 @@
 <main class="form-signin">
   <form method="post" action="{{ route('login') }}">
     @csrf
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 fw-normal">{{ config('app.name') }}</h1>
 
     @if ($errors->any())
       <div class="alert alert-danger">

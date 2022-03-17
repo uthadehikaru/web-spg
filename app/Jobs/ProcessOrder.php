@@ -19,12 +19,7 @@ class ProcessOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $order, $user;
-
-    public function middleware()
-    {
-        return [(new WithoutOverlapping($this->order->id))->dontRelease()];
-    }
+    public $order, $user;
 
     /**
      * Create a new job instance.
@@ -33,6 +28,7 @@ class ProcessOrder implements ShouldQueue
      */
     public function __construct(Order $order)
     {
+        $this->onQueue('order');
         $this->order = $order;
         $this->user = $order->user;
     }
@@ -182,9 +178,11 @@ class ProcessOrder implements ShouldQueue
             $order_no = $order['outputFields']['outputField']['@attributes']['value'];
             $this->order->c_order_id = $order_id;
             $this->order->c_order_no = $order_no;
+            $this->order->job_id = null;
             $this->order->save();
         }else{
-            $error = substr($clean_xml, strpos($clean_xml,'<Error>'), (strpos($clean_xml,'</Error>')-strpos($clean_xml,'<Error>')));
+            $error = "Order ".$this->order->order_no." : ";
+            $error .= substr($clean_xml, strpos($clean_xml,'<Error>'), (strpos($clean_xml,'</Error>')-strpos($clean_xml,'<Error>')));
             throw new \Exception($error);
         }
     }

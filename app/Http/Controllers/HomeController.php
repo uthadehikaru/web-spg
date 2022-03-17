@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\User;
+use App\Models\Product;
 use Auth;
 use DB;
 
@@ -21,6 +23,8 @@ class HomeController extends Controller
             $data['all'] = DB::table('orders')->count();
             $data['synced'] = DB::table('orders')->whereNotNull('c_order_id')->count();
             $data['unsynced'] = DB::table('orders')->whereNull('c_order_id')->count();
+            $data['users'] = User::count();
+            $data['products'] = Product::count();
         }else{
             $data['all'] = DB::table('orders')->where('user_id',Auth::id())->count();
             $data['synced'] = DB::table('orders')->where('user_id',Auth::id())->whereNotNull('c_order_id')->count();

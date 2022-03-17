@@ -30,6 +30,8 @@
     
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/dashboard.css') }}" rel="stylesheet">
+
+    @stack('styles')
   </head>
   <body>
     
@@ -50,6 +52,11 @@
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Hi, {{ Auth::user()->name }} !
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">
               <span data-feather="home"></span>
@@ -73,7 +80,7 @@
           @can('sync', Auth::user())
           <li class="nav-item">
             <a class="nav-link" href="{{ route('sync') }}">
-              <span data-feather="layers"></span>
+              <span data-feather="refresh-cw"></span>
               Integrations
             </a>
           </li>
@@ -89,7 +96,7 @@
           @can('list', \App\Models\Product::class)
           <li class="nav-item">
             <a class="nav-link" href="{{ route('product') }}">
-              <span data-feather="list"></span>
+              <span data-feather="box"></span>
               Products
             </a>
           </li>

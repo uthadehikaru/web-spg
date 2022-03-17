@@ -45,6 +45,7 @@ class ScanController extends Controller
             'customer_id' => $user->customer_id,
             'location_id' => $user->location_id,
             'date_ordered'=>$data['date_ordered'],
+            'is_canceled'=>false,
         ])->first();
 
         if($order)
