@@ -24,15 +24,6 @@
       <h2>#{{ $order->order_no }} - {{ $order->date_ordered->format('d M Y') }}</h2>
       <p>{{ $order->customer_name }} - {{ $order->location_name }}. {{ $order->total }}</p>
       <p>
-        @if($order->c_order_id>0 && $order->is_canceled && $order->cancel_message)
-          {{ $order->cancel_message }}
-        @elseif($order->c_order_id>0 && $order->is_canceled)
-          Waiting to be canceled
-        @elseif($order->c_order_id>0)
-          Synced
-        @else
-          Unsynced
-        @endif
         @if($order->c_order_id>0)
           - <a href="{{ config('idempiere.host') }}/webui/?Action=Zoom&TableName=C_Order&Record_ID={{ $order->c_order_id }}" target="_blank">{{ $order->c_order_no }}</a>
         @endif

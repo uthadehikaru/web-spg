@@ -85,12 +85,15 @@ class CancelOrder implements ShouldQueue
         $objJsonDocument = json_encode($objXmlDocument);
         $arrOutput = json_decode($objJsonDocument, TRUE);
         if(strpos($clean_xml, 'IsError="true"')==0){
-            $this->order->cancel_message = "Canceled";
-            $this->order->is_canceled = 1;
+            $this->order->sync_message = null;
+            $this->order->status = 'canceled';
             $this->order->job_id = null;
             $this->order->save();
         }else{
             $error = substr($clean_xml, strpos($clean_xml,'<Error>'), (strpos($clean_xml,'</Error>')-strpos($clean_xml,'<Error>')));
+            $this->order->job_id = null;
+            $this->order->sync_message = $error;
+            $this->order->save();
             throw new \Exception($error);
         }
     }

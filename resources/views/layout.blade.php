@@ -67,8 +67,16 @@
           @can('create', \App\Models\Order::class)
           <li class="nav-item">
             <a class="nav-link" href="{{ route('order') }}">
-              <span data-feather="file"></span>
+              <span data-feather="file-plus"></span>
               New Order
+            </a>
+          </li>
+          @endcan
+          @can('request', \App\Models\Order::class)
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('order.request') }}">
+              <span data-feather="file-minus"></span>
+              Cancel Order
             </a>
           </li>
           @endcan

@@ -28,12 +28,13 @@ class SyncController extends Controller
             return abort(403);
         }
 
-        $orders = Order::whereNull('c_order_id')->get();
+        $orders = Order::whereIn('status',['draft','error'])->get();
         $count = 0;
         foreach($orders as $order){
             if(!$order->job){
                 $job = new ProcessOrder($order);
                 $order->job_id = app(\Illuminate\Contracts\Bus\Dispatcher::class)->dispatch($job);
+                $order->status = 'processing';
                 $order->save();
                 $count++;
             }

@@ -29,9 +29,9 @@ class Order extends Model
         'c_order_id',
         'c_order_no',
         'grandtotal',
-        'is_canceled',
-        'cancel_message',
+        'sync_message',
         'job_id',
+        'status',
     ];
     
     protected $casts = [

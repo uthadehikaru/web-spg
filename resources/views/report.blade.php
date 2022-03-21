@@ -23,7 +23,6 @@
       </div>
       @endif
 
-      <h2>Order</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
@@ -36,25 +35,23 @@
             @foreach($orders as $order)
             <tr>
               <td>
-                @if($order->c_order_id)
-                  @if($order->is_canceled)
-                    @if($order->cancel_message)
-                      {{ $order->cancel_message }}
-                    @else
-                      @can('sync', Auth::user())
-                        <a href="{{ route('sync.cancel', $order->order_no) }}" class="btn btn-danger btn-sm mr-2" title="Cancel Order" onclick="return confirm('Are you sure to cancel this order?')"><span data-feather="x"></span></a>
-                      @else
-                        Waiting for cancelation
-                      @endcan
-                    @endif
+                @if($order->status=='draft')
+                  <a href="{{ route('order.edit', $order->order_no) }}" class="btn btn-warning btn-sm mr-2" title="Edit Order"><span data-feather="edit"></span></a>
+                  <a href="{{ route('order.delete', $order->order_no) }}" class="btn btn-danger btn-sm" title="Delete Order" onclick="return confirm('Are you sure delete this order?')"><span data-feather="trash"></span></a>
+                @elseif($order->status=='processing')
+                  Waiting for synchronization
+                @elseif($order->status=='processed')
+                  Synced
+                @elseif($order->status=='cancel')
+                  @if(Auth::user()->is_admin)
+                    <a href="{{ route('sync.cancel', $order->order_no) }}" class="btn btn-danger btn-sm mr-2" title="Cancel Order" onclick="return confirm('Are you sure to cancel this order?')">Cancel</a>
                   @else
-                    @can('sync', Auth::user())
-                      Synced
-                    @else
-                      <a href="{{ route('order.cancel', $order->order_no) }}" class="btn btn-danger btn-sm mr-2" title="Cancel Order" onclick="return confirm('Are you sure to cancel this order?')"><span data-feather="x"></span></a>
-                      @endcan
+                    Waiting for cancelation
                   @endif
-                @else
+                @elseif($order->status=='canceled')
+                  Canceled
+                @elseif($order->status=='error')
+                  Failed<br/>
                   <a href="{{ route('order.edit', $order->order_no) }}" class="btn btn-warning btn-sm mr-2" title="Edit Order"><span data-feather="edit"></span></a>
                   <a href="{{ route('order.delete', $order->order_no) }}" class="btn btn-danger btn-sm" title="Delete Order" onclick="return confirm('Are you sure delete this order?')"><span data-feather="trash"></span></a>
                 @endif

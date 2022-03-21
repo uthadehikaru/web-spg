@@ -51,7 +51,7 @@
       </div>
     @endif
     <div class="form-floating">
-      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="{{ old('email') }}">
       <label for="floatingInput">Email address</label>
     </div>
     <div class="form-floating">

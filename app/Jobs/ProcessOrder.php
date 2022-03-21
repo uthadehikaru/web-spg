@@ -179,10 +179,15 @@ class ProcessOrder implements ShouldQueue
             $this->order->c_order_id = $order_id;
             $this->order->c_order_no = $order_no;
             $this->order->job_id = null;
+            $this->order->status = 'processed';
             $this->order->save();
         }else{
-            $error = "Order ".$this->order->order_no." : ";
-            $error .= substr($clean_xml, strpos($clean_xml,'<Error>'), (strpos($clean_xml,'</Error>')-strpos($clean_xml,'<Error>')));
+            $error = substr($clean_xml, strpos($clean_xml,'<Error>'), (strpos($clean_xml,'</Error>')-strpos($clean_xml,'<Error>')));
+            $this->order->job_id = null;
+            $this->order->status = 'error';
+            $this->order->sync_message = $error;
+            $this->order->save();
+            $error = "Order ".$this->order->order_no." : ".$error;
             throw new \Exception($error);
         }
     }

@@ -28,10 +28,12 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/order', [ScanController::class,'index'])->name('order');
     Route::post('/order', [ScanController::class,'submit'])->name('order.submit');
+    Route::get('/order/cancel', [ReportController::class,'request'])->name('order.request');
+    Route::post('/order/cancel', [ReportController::class,'cancel'])->name('order.cancel');
+    Route::get('/order/{order:order_no}/reactive', [ReportController::class,'reactive'])->name('order.reactive');
     Route::get('/order/{order:order_no}/edit', [ScanController::class,'edit'])->name('order.edit');
     Route::post('/order/{order:order_no}/edit', [ScanController::class,'update'])->name('order.update');
     Route::get('/order/{order_no}/delete', [SyncController::class,'delete'])->name('order.delete');
-    Route::get('/order/{order:order_no}/cancel', [ReportController::class,'cancel'])->name('order.cancel');
     Route::get('/order/{order:order_no}', [ReportController::class,'detail'])->name('order.detail');
 
     Route::get('/report', [ReportController::class,'index'])->name('report');

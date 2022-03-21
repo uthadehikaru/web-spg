@@ -45,8 +45,7 @@ class ScanController extends Controller
             'customer_id' => $user->customer_id,
             'location_id' => $user->location_id,
             'date_ordered'=>$data['date_ordered'],
-            'is_canceled'=>false,
-        ])->first();
+        ])->whereIn('status',['draft','processing','processed'])->first();
 
         if($order)
             return redirect()->route('report')->with('error','Order already exists. Order No. '.$order->order_no);
@@ -152,6 +151,7 @@ class ScanController extends Controller
             }
 
             $order->grandtotal = $total;
+            $order->status ="draft";
             $order->save();
 
             return redirect()->route('report')->with('message','Order Updated');

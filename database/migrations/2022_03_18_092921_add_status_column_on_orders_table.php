@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCancelColumnOnOrdersTable extends Migration
+class AddStatusColumnOnOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddCancelColumnOnOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('sync_message')->nullable();
-            $table->unsignedBigInteger('job_id')->nullable();
+            $table->string('status')->default('draft');
         });
     }
 
@@ -27,7 +26,7 @@ class AddCancelColumnOnOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn(['sync_message','job_id']);
+            $table->dropColumn('status');
         });
     }
 }
