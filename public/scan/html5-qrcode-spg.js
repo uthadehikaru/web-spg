@@ -21,7 +21,7 @@ function check(decodedText){
                 var product = JSON.parse(xhr.responseText);
                 process(product);
             }else{
-                alert('Product not found');
+                alert('Product not found '+decodedText);
             }
         }
     }
@@ -44,6 +44,7 @@ function process(product){
         decimalCharacter : ',',
         decimalPlaces : 0,
       });
+    alert("Scanned "+product.name);
 }
 
 function increaseQuantity(row)
@@ -112,7 +113,7 @@ docReady(function() {
         "qr-reader", 
         { 
             fps: 10,
-            qrbox: {width:250,height:200},
+            qrbox: { "width":300, "height": 200},
             //formatsToSupport: formatsToSupport,
             experimentalFeatures: {
                 useBarCodeDetectorIfSupported: true
