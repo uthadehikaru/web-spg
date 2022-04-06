@@ -20,6 +20,10 @@ use App\Http\Controllers\ApiController;
 |
 */
 
+Route::get('/metronic', function(){
+    return view('metronic');
+});
+
 Route::middleware('auth')->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('home');
