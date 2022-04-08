@@ -38,6 +38,11 @@ class Order extends Model
         'date_ordered' => 'date',
     ];
 
+    public function scopeActive($query)
+    {
+        return $query->whereNotIn('status',['cancel','canceled']);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

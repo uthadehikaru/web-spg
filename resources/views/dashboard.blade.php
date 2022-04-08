@@ -8,7 +8,7 @@
             <div class="kt-portlet__head kt-portlet__head--noborder kt-portlet__space-x">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        Summary
+                        Recent Orders
                     </h3>
                 </div>
                 <div class="kt-portlet__head-toolbar">
@@ -182,9 +182,16 @@ var KTDashboard = function() {
         var config = {
             type: 'line',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
+                labels: [
+                    @foreach($recent_orders as $order)
+                    "{{ $order->order_no }}"
+                    @if(!$loop->last)
+                    ,
+                    @endif
+                    @endforeach
+                ],
                 datasets: [{
-                    label: "Orders",
+                    label: "Order Amount",
                     backgroundColor: Chart.helpers.color('#e14c86').alpha(1).rgbString(),  //gradient
                     borderColor: '#e13a58',
 
@@ -195,7 +202,12 @@ var KTDashboard = function() {
 
                     //fill: 'start',
                     data: [
-                        10, 1, 1, 1, 0, 0, 0, 0, 0, 0
+                    @foreach($recent_orders as $order)
+                    {{ $order->grandtotal }}
+                    @if(!$loop->last)
+                    ,
+                    @endif
+                    @endforeach
                     ]
                 }]
             },

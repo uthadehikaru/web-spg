@@ -132,7 +132,7 @@
 									<div class="kt-header__topbar-user">
 										<span class="kt-header__topbar-welcome kt-hidden-mobile">Hi,</span>
 										<span class="kt-header__topbar-username kt-hidden-mobile">{{ Auth::user()->name }}</span>
-										<img alt="Pic" src="{{ asset('assets/media/users/default.jpg') }}" />
+										<img alt="Pic" src="{{ asset('assets/images/default.jpg') }}" />
 									</div>
 								</div>
 								<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
@@ -140,7 +140,7 @@
 									<!--begin: Head -->
 									<div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url(assets/media/misc/bg-1.jpg)">
 										<div class="kt-user-card__avatar">
-											<img alt="Pic" src="{{ asset('assets/media/users/default.jpg') }}" />
+											<img alt="Pic" src="{{ asset('assets/images/default.jpg') }}" />
 
 										</div>
 										<div class="kt-user-card__name">
