@@ -16,6 +16,7 @@ class ScanController extends Controller
         if (Auth::user()->cannot('create', Order::class)) {
             return abort(403);
         }
+        $data['title'] = "New Order";
         $data['order'] = null;
         return view('scan', $data);
     }
@@ -24,6 +25,7 @@ class ScanController extends Controller
         if (Auth::user()->cannot('edit', $order)) {
             return abort(403);
         }
+        $data['title'] = "Edit Order #".$order->order_no;
         $data['order'] = $order;
         return view('scan', $data);
     }

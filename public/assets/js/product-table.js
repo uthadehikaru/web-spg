@@ -81,20 +81,71 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "../src/assets/js/pages/dashboard.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "../src/assets/js/pages/crud/metronic-datatable/base/html-table.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "../src/assets/js/pages/dashboard.js":
-/*!*******************************************!*\
-  !*** ../src/assets/js/pages/dashboard.js ***!
-  \*******************************************/
+/***/ "../src/assets/js/pages/crud/metronic-datatable/base/html-table.js":
+/*!*************************************************************************!*\
+  !*** ../src/assets/js/pages/crud/metronic-datatable/base/html-table.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Class definition
 
+var KTDatatableHtmlTableDemo = function() {
+	// Private functions
+
+	// demo initializer
+	var demo = function() {
+
+		var datatable = $('.kt-datatable').KTDatatable({
+			data: {
+				saveState: {cookie: false},
+			},
+			search: {
+				input: $('#generalSearch'),
+			},
+			columns: [
+				{
+					field: 'Status',
+					title: 'Status',
+					autoHide: false,
+					// callback function support for column rendering
+					template: function(row) {
+						var status = {
+							1: {'title': 'Active', 'class': 'kt-badge--brand'},
+							0: {'title': 'Inactive', 'class': ' kt-badge--danger'},
+						};
+						return '<span class="kt-badge ' + status[row.Status].class + ' kt-badge--inline kt-badge--pill">' + status[row.Status].title + '</span>';
+					},
+				}
+			]
+		});
+
+	$('#kt_form_status').on('change', function() {
+	datatable.search($(this).val().toLowerCase(), 'Status');
+	});
+
+	$('#kt_form_status,#kt_form_type').selectpicker();
+		
+	};
+
+	return {
+		// Public functions
+		init: function() {
+			// init dmeo
+			demo();
+		},
+	};
+}();
+
+jQuery(document).ready(function() {
+	KTDatatableHtmlTableDemo.init();
+});
 
 /***/ })
 

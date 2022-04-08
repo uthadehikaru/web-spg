@@ -20,14 +20,13 @@ use App\Http\Controllers\ApiController;
 |
 */
 
-Route::get('/metronic', function(){
-    return view('metronic');
-});
-
 Route::middleware('auth')->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('home');
         Route::get('/dashboard', 'dashboard')->name('dashboard');
+    });
+    Route::get('/metronic', function(){
+        return view('metronic');
     });
     
     Route::get('/order', [ScanController::class,'index'])->name('order');
@@ -55,7 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/product/{product:value}', [ApiController::class,'product'])->name('api.product');
     
     Route::get('/logout', [LoginController::class,'logout'])->name('logout');
-    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
 });
 Route::get('/login', [LoginController::class,'index'])->name('login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('login.authenticate');

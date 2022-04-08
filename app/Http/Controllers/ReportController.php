@@ -10,6 +10,7 @@ use DB;
 class ReportController extends Controller
 {
     public function index(){
+        $data['title'] = 'Reports';
         if(Auth::user()->is_admin)
             $data['orders'] = Order::latest('date_ordered')->paginate(10);
         else
@@ -31,7 +32,7 @@ class ReportController extends Controller
         if (Auth::user()->cannot('request', Order::class)) {
             return abort(403);
         }
-
+        $data['title'] = "Cancel Order";
         $data['syncedOrders'] = Order::where('status','processed')->latest('date_ordered')->get();
         $data['orders'] = Order::where('status','cancel')->paginate(5);
         return view('request-order', $data);
@@ -59,12 +60,12 @@ class ReportController extends Controller
             return abort(403);
         }
 
-        $order = Order::where([
+        $activeOrder = Order::where([
             'customer_id' => $order->customer_id,
             'location_id' => $order->location_id,
             'date_ordered'=>$order->date_ordered,
         ])->whereIn('status',['draft','processing','processed'])->first();
-        if($order)
+        if($activeOrder)
             return back()->with('error','Cannot reactive, Another active order is exists #'.$order->order_no);
 
         $order->status = "processed";

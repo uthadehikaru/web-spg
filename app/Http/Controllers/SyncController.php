@@ -16,7 +16,7 @@ class SyncController extends Controller
         if (Auth::user()->cannot('sync', Auth::user())) {
             return abort(403);
         }
-
+        $data['title'] = "Integration";
         $data['jobs'] = DB::table('jobs')->count();
         $data['failedJobs'] = DB::table('failed_jobs')->where('queue','order')->get();
         return view('sync',$data);

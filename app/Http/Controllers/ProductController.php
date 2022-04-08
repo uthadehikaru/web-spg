@@ -13,7 +13,8 @@ class ProductController extends Controller
         if (Auth::user()->cannot('list', Product::class)) {
             return abort(403);
         }
-        $data['products'] = Product::orderBy('value')->paginate(50);
+        $data['title'] = "Products";
+        $data['products'] = Product::orderBy('value')->get();
         $data['total'] = Product::count();
         return view('product',$data);
     }

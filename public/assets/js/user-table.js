@@ -81,20 +81,50 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "../src/assets/js/pages/dashboard.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "../src/assets/js/pages/crud/metronic-datatable/base/html-table.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "../src/assets/js/pages/dashboard.js":
-/*!*******************************************!*\
-  !*** ../src/assets/js/pages/dashboard.js ***!
-  \*******************************************/
+/***/ "../src/assets/js/pages/crud/metronic-datatable/base/html-table.js":
+/*!*************************************************************************!*\
+  !*** ../src/assets/js/pages/crud/metronic-datatable/base/html-table.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Class definition
 
+var KTDatatableHtmlTableDemo = function() {
+	// Private functions
+
+	// demo initializer
+	var demo = function() {
+
+		var datatable = $('.kt-datatable').KTDatatable({
+			data: {
+				saveState: {cookie: false},
+			},
+			search: {
+				input: $('#generalSearch'),
+			},
+		});
+
+	};
+
+	return {
+		// Public functions
+		init: function() {
+			// init dmeo
+			demo();
+		},
+	};
+}();
+
+jQuery(document).ready(function() {
+	KTDatatableHtmlTableDemo.init();
+});
 
 /***/ })
 
