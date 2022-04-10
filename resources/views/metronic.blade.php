@@ -117,6 +117,11 @@
                                         </a>
                                     </li>
 									@endcan
+									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
+                                        <a href="{{ route('logout') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">Logout</span>
+                                        </a>
+                                    </li>
 								</ul>
 							</div>
 						</div>

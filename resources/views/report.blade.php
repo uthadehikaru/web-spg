@@ -90,7 +90,6 @@
         <table class="kt-datatable" id="html_table" width="100%">
             <thead>
                 <tr>
-                    <th>Action</th>
                     <th>Order ID</th>
                     <th>Document No</th>
                     <th>Date Ordered</th>
@@ -98,24 +97,12 @@
                     <th>Location</th>
                     <th title="Status">Status</th>
                     <th>Total</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($orders as $order)
                 <tr>
-                  <td>
-                  @if($order->status=='draft')
-                    <a href="{{ route('order.edit', $order->order_no) }}" class="btn btn-warning btn-sm mr-2" title="Edit Order">Edit</a>
-                    <a href="{{ route('order.delete', $order->order_no) }}" class="btn btn-danger btn-sm" title="Delete Order" onclick="return confirm('Are you sure delete this order?')">Delete</a>
-                  @elseif($order->status=='cancel')
-                    @if(Auth::user()->is_admin)
-                      <a href="{{ route('sync.cancel', $order->order_no) }}" class="btn btn-danger btn-sm mr-2" title="Cancel Order" onclick="return confirm('Are you sure to cancel this order?')">Cancel</a>
-                    @endif
-                  @elseif($order->status=='error')
-                    <a href="{{ route('order.edit', $order->order_no) }}" class="btn btn-warning btn-sm mr-2" title="Edit Order">Edit</a>
-                    <a href="{{ route('order.delete', $order->order_no) }}" class="btn btn-danger btn-sm" title="Delete Order" onclick="return confirm('Are you sure delete this order?')">Delete</a>
-                  @endif
-                </td>
                   <td>
                     <a href="{{ route('order.detail', $order->order_no) }}">#{{ $order->order_no }}</a><br/>
                     
@@ -132,6 +119,19 @@
                   <td>{{ $order->location_name}}</td>
                   <td>{{ $order->status}}</td>
                   <td>{{ $order->total }}</td>
+                  <td>
+                  @if($order->status=='draft')
+                    <a href="{{ route('order.edit', $order->order_no) }}" class="btn btn-warning btn-sm mr-2" title="Edit Order">Edit</a>
+                    <a href="{{ route('order.delete', $order->order_no) }}" class="btn btn-danger btn-sm" title="Delete Order" onclick="return confirm('Are you sure delete this order?')">Delete</a>
+                  @elseif($order->status=='cancel')
+                    @if(Auth::user()->is_admin)
+                      <a href="{{ route('sync.cancel', $order->order_no) }}" class="btn btn-danger btn-sm mr-2" title="Cancel Order" onclick="return confirm('Are you sure to cancel this order?')">Cancel</a>
+                    @endif
+                  @elseif($order->status=='error')
+                    <a href="{{ route('order.edit', $order->order_no) }}" class="btn btn-warning btn-sm mr-2" title="Edit Order">Edit</a>
+                    <a href="{{ route('order.delete', $order->order_no) }}" class="btn btn-danger btn-sm" title="Delete Order" onclick="return confirm('Are you sure delete this order?')">Delete</a>
+                  @endif
+                </td>
                 </tr>
                 @endforeach
             </tbody>
