@@ -29,6 +29,11 @@ class ProductPolicy
         return $user->is_admin;
     }
 
+    public function print(User $user)
+    {
+        return $user->is_admin;
+    }
+
     public function api(User $user)
     {
         return $user;

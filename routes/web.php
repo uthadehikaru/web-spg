@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/products', [ProductController::class,'index'])->name('product');
     Route::get('/products/sync', [ProductController::class,'sync'])->name('product.sync');
+    Route::get('/products/print', [ProductController::class,'print'])->name('product.print');
     
     Route::get('/api/product/{product:value}', [ApiController::class,'product'])->name('api.product');
     

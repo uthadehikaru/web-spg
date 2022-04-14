@@ -28,4 +28,13 @@ class ProductController extends Controller
 
         return back();
     }
+
+    public function print()
+    {
+        if (Auth::user()->cannot('print', Product::class)) {
+            return abort(403);
+        }
+        $data['products'] = Product::orderBy('value')->get();
+        return view('print', $data);
+    }
 }

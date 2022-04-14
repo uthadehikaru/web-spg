@@ -25,6 +25,10 @@
                         <i class="la la-refresh"></i>
                         Sync
                     </a>
+                    <a href="{{ route('product.print') }}" target="_blank" class="btn btn-brand btn-elevate btn-icon-sm">
+                        <i class="la la-print"></i>
+                        Print
+                    </a>
                 </div>
             </div>
         </div>
